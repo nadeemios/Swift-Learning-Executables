@@ -1,6 +1,7 @@
 
 import Alamofire
 import Foundation
+import SwiftConcepts
 print("Hello, world!")
 
 func display(){
@@ -21,4 +22,31 @@ func display(){
 }
 
 
-display()
+struct Bottle: Purchasable {
+    var name:String
+    func buy() {
+        print("Purchased \(name) bottle")
+    }
+}
+struct Mac: Purchasable {
+    var name:String
+    func buy() {
+        print("Purchased \(name) mac")
+    }
+}
+
+
+let books:Any  = [Bottle(name: "milton"),Mac(name: "macbook-air ")]
+extension Array:Purchasable where Element:Purchasable {
+    public func buy() {
+        for i in self {
+            i.buy()
+        }
+    }
+}
+func displayAllpurchasables(){
+    if let items = books as? Purchasable {
+        items.buy()
+    }
+}
+displayAllpurchasables()
